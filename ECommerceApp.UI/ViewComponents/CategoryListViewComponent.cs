@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.ViewComponents;
 
 namespace ECommerceApp.UI.ViewComponents
 {
-    public class CategoryListViewComponent:ViewComponent
+    public class CategoryListViewComponent : ViewComponent
     {
         private readonly ICategoryService _categoryService;
 
@@ -13,17 +13,18 @@ namespace ECommerceApp.UI.ViewComponents
             _categoryService = categoryService;
         }
 
-        public async Task<ViewViewComponentResult> InvokeAsync()
+        public async Task<ViewViewComponentResult> InvokeAsync(bool isAdmin = false)
         {
-            var categories=await _categoryService.GetAllAsync();
+            var categories = await _categoryService.GetAllAsync();
             var param = HttpContext.Request.Query["category"];
 
-            var category=int.TryParse(param, out var categoryId);
+            var category = int.TryParse(param, out var categoryId);
 
             var model = new CategoryListViewModel
             {
-                Categories=categories,
-                CurrentCategory=category ? categoryId : 0,
+                IsAdmin = isAdmin,
+                Categories = categories,
+                CurrentCategory = category ? categoryId : 0,
             };
 
             return View(model);

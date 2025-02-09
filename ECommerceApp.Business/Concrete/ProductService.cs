@@ -23,9 +23,10 @@ namespace ECommerceApp.Business.Concrete
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var item = await _productDal.Get(p => p.ProductId == id);
+            await _productDal.Delete(item);
         }
 
         public async Task<List<Product>> GetAllAsync()
@@ -35,7 +36,7 @@ namespace ECommerceApp.Business.Concrete
 
         public async Task<List<Product>> GetAllByCategoryId(int categoryId)
         {
-            return await _productDal.GetList(p=>p.CategoryId==categoryId || categoryId == 0);
+            return await _productDal.GetList(p => p.CategoryId == categoryId || categoryId == 0);
         }
 
         public Task<Product> GetByIdAsync(int id)

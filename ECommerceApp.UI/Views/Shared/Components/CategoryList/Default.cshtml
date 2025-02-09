@@ -1,12 +1,17 @@
 ﻿@model CategoryListViewModel
+
+@{
+    var controller = Model.IsAdmin ? "admin" : "product";
+}
+
 <section class="list-group">
-    @if (Model.CurrentCategory == 0) 
-    { 
-        <a class="list-group-item active" style="cursor:pointer;" href="/product/index?category=0">All Categories</a>
-    }
-    else 
+    @if (Model.CurrentCategory == 0)
     {
-        <a class="list-group-item" style="cursor:pointer;" href="/product/index?category=0">All Categories</a>
+        <a class="list-group-item active" style="cursor:pointer;" href="/@controller/index?category=0">All Categories</a>
+    }
+    else
+    {
+        <a class="list-group-item" style="cursor:pointer;" href="/@controller/index?category=0">All Categories</a>
     }
     @foreach (var item in Model.Categories)
     {
@@ -15,9 +20,24 @@
         {
             css += " active";
         }
+        <div style="display:flex;">
 
         <a class="@css" style="cursor:pointer;"
-           href="/product/index?category=@item.CategoryId">@item.CategoryName</a>
+           href="/@controller/index?category=@item.CategoryId">@item.CategoryName</a>
+        <button id="edit-@item.CategoryId" onclick="SetEdit(id)">Edit</button>
 
+        </div>
     }
 </section>
+
+
+<script>
+
+    function SetEdit(id) {
+        const editElement = document.getElementById(id);
+        editElement.style.display = "none";
+    }
+
+
+
+</script>

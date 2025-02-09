@@ -6,5 +6,6 @@ namespace ECommerceApp.UI
     {
         public List<Category> Categories { get; set; }
         public int CurrentCategory { get; set; }
+        public bool IsAdmin { get; internal set; }
     }
 }
